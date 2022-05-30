@@ -3,3 +3,4 @@
 require_relative 'game_class'
 
 game = Game.new
+game.play_game
