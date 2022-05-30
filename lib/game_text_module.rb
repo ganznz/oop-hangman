@@ -5,7 +5,7 @@ require_relative 'string_class'
 # Includes methods that get used as commentary throughout the game
 module GameText
   def enter_letter_text
-    'Enter a letter:'.yellow
+    'Enter a letter:'
   end
 
   def enter_another_letter_text
