@@ -17,11 +17,15 @@ module GameText
   end
 
   def bad_guess_text
-    "\s\s >>Bad guess :".red
+    "\s\s >>Bad guess :(".red
   end
 
   def guesses_remaining_text(guesses_remaining)
-    "You have #{guesses_remaining} guesses remaining.".yellow
+    if guesses_remaining > 3
+      "You have #{guesses_remaining} guesses remaining.".yellow
+    else
+      "AAAH SHIT YOU ONLY HAVE #{guesses_remaining} GUESSES REMAINING".red
+    end
   end
 
   def letters_guessed_text(guessed_letters)
@@ -34,5 +38,13 @@ module GameText
 
   def invalid_guess_length_text
     "\s\s >>Make sure to enter a single letter.".red
+  end
+
+  def game_won_text
+    'Congrats, you won!'
+  end
+
+  def game_lost_text(game_word)
+    "You're out of guesses!\nThe word was #{game_word}"
   end
 end
