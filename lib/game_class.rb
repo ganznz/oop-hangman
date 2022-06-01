@@ -39,7 +39,7 @@ class Game
         correct_guess(letter)
       else
         @guesses_remaining -= 1
-        puts "\n\n#{hangman_ascii(@guesses_remsaining)}\n"
+        puts "\n\n#{hangman_ascii(@guesses_remaining)}\n"
         puts
         incorrect_guess
       end
