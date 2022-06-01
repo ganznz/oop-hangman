@@ -2,6 +2,7 @@
 
 require_relative 'game_text_module'
 require_relative 'string_class'
+require_relative 'hangman_ascii_class'
 
 # class including game methods
 class Game
@@ -13,14 +14,46 @@ class Game
     @game_word = generate_word
     @guess_progression = '_' * @game_word.length
     @guessed_letters = []
+    @guessed_letters_coloured = []
     @guesses_remaining = 10
   end
 
   def play_game
     until @guesses_remaining.zero?
+      puts
       puts guesses_remaining_text(@guesses_remaining)
       puts @guess_progression
       letter = guess_letter
+      system 'clear'
+
+      if already_guessed?(letter)
+        puts "\n\n#{hangman_ascii(@guesses_remaining)}"
+        puts
+        already_guessed_letter
+        next
+      end
+
+      if good_guess?(letter)
+        puts "\n\n#{hangman_ascii(@guesses_remaining)}"
+        puts
+        correct_guess(letter)
+      else
+        @guesses_remaining -= 1
+        puts "\n\n#{hangman_ascii(@guesses_remsaining)}\n"
+        puts
+        incorrect_guess
+      end
+
+      update_guessed_letter_arrays(letter)
+      puts "Letters guessed: #{@guessed_letters_coloured.join(' ')}"
+
+      if @guess_progression == @game_word
+        puts game_won_text
+        break
+      elsif @guess_progression != @game_word && @guesses_remaining.zero?
+        puts game_lost_text(@game_word)
+        break
+      end
     end
   end
 
@@ -43,7 +76,6 @@ class Game
     word_to_guess_array.each_with_index do |element, i|
       guess_progression_array[i] = element if element == letter
     end
-
     @guess_progression = guess_progression_array.join
   end
 
@@ -55,34 +87,32 @@ class Game
       puts invalid_guess_length_text
       letter = gets.chomp.downcase
     end
-    @guessed_letters << letter
     letter
   end
 
-  def already_guessed?(letter)
-    @guessed_letters.include(letter)
+  def update_guessed_letter_arrays(letter)
+    good_guess?(letter) ? @guessed_letters_coloured << letter.green : @guessed_letters_coloured << letter.red
+    @guessed_letters << letter
   end
 
-  def correct_guess?(letter)
+  def already_guessed?(letter)
+    @guessed_letters.include?(letter)
+  end
+
+  def good_guess?(letter)
     @game_word.include?(letter)
   end
 
-  def if_correct_guess(letter)
+  def correct_guess(letter)
     puts good_guess_text
     update_letter_progression(letter)
-    puts @guess_progression
   end
 
-  def if_incorrect_guess(letter)
+  def incorrect_guess
     puts bad_guess_text
-    @guesses_remaining -= 1
   end
 
   def already_guessed_letter
     puts already_guessed_that_letter_text
-  end
-
-  def game_won?
-    
   end
 end
