@@ -15,3 +15,4 @@ while replay_game
 end
 
 puts 'Thanks for playing!'
+puts "Run the command #{'ruby lib/main.rb'.yellow} if you want to replay!"
