@@ -13,18 +13,18 @@ module GameText
   end
 
   def good_guess_text
-    "\s\s >>Good guess :D".green
+    "\nGood guess :D".green
   end
 
   def bad_guess_text
-    "\s\s >>Bad guess :(".red
+    "\nBad guess :(".red
   end
 
   def guesses_remaining_text(guesses_remaining)
     if guesses_remaining > 3
-      "You have #{guesses_remaining} guesses remaining.".yellow
+      "\nYou have #{guesses_remaining} guesses remaining.".yellow
     else
-      "AAAH SHIT YOU ONLY HAVE #{guesses_remaining} GUESSES REMAINING".red
+      "\nAAAH SHIT YOU ONLY HAVE #{guesses_remaining} GUESSES REMAINING".red
     end
   end
 
@@ -33,18 +33,26 @@ module GameText
   end
 
   def already_guessed_that_letter_text
-    "\s\s >>Oops! You've already guessed that letter.".red
+    "\nYou've already guessed that letter!".red
   end
 
   def invalid_guess_length_text
     "\s\s >>Make sure to enter a single letter.".red
   end
 
-  def game_won_text
-    'Congrats, you won!'
+  def game_won_text(game_word)
+    "Congrats, you guessed the letter #{game_word.yellow}."
   end
 
   def game_lost_text(game_word)
-    "You're out of guesses!\nThe word was #{game_word}"
+    "You're out of guesses!\nThe word was #{game_word.yellow}."
+  end
+
+  def replay_game_text
+    'Would you like to play again? Y/N'
+  end
+
+  def invalid_replay_game_input_text
+    "\s\s >>Invalid input! Enter #{'Y'.yellow} or #{'N'.yellow}."
   end
 end
