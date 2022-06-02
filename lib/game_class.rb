@@ -20,41 +20,40 @@ class Game
 
   def play_game
     until @guesses_remaining.zero?
-      puts
       puts guesses_remaining_text(@guesses_remaining)
       puts @guess_progression
       letter = guess_letter
       system 'clear'
 
       if already_guessed?(letter)
-        puts "\n\n#{hangman_ascii(@guesses_remaining)}"
-        puts
         already_guessed_letter
-        next
+        redo
       end
 
-      if good_guess?(letter)
-        puts "\n\n#{hangman_ascii(@guesses_remaining)}"
-        puts
-        correct_guess(letter)
-      else
-        @guesses_remaining -= 1
-        puts "\n\n#{hangman_ascii(@guesses_remaining)}\n"
-        puts
-        incorrect_guess
-      end
+      good_guess?(letter) ? correct_guess(letter) : incorrect_guess
 
       update_guessed_letter_arrays(letter)
       puts "Letters guessed: #{@guessed_letters_coloured.join(' ')}"
 
       if @guess_progression == @game_word
-        puts game_won_text
+        puts game_won_text(@game_word)
         break
-      elsif @guess_progression != @game_word && @guesses_remaining.zero?
+      elsif @guesses_remaining.zero?
         puts game_lost_text(@game_word)
         break
       end
     end
+  end
+
+  def replay_game?
+    puts replay_game_text
+    plr_response = gets.chomp.downcase
+    valid_responses = %w[y n]
+    until !plr_response.nil? && valid_responses.include?(plr_response)
+      puts invalid_replay_game_input_text
+      plr_response = gets.chomp.downcase
+    end
+    plr_response == 'y'
   end
 
   private
@@ -104,15 +103,19 @@ class Game
   end
 
   def correct_guess(letter)
+    puts "\n\n#{hangman_ascii(@guesses_remaining)}" # prints hangman ascii
     puts good_guess_text
     update_letter_progression(letter)
   end
 
   def incorrect_guess
+    @guesses_remaining -= 1
+    puts "\n\n#{hangman_ascii(@guesses_remaining)}" # prints hangman ascii
     puts bad_guess_text
   end
 
   def already_guessed_letter
+    puts "\n\n#{hangman_ascii(@guesses_remaining)}" # prints hangman ascii
     puts already_guessed_that_letter_text
   end
 end
