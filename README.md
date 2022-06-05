@@ -2,4 +2,4 @@
 
 ![header image](img/header.png)
 
-### Play on [Replit](https://replit.com/@Lollganz/oop-hangman#README.md)
+### Play on [Replit](https://replit.com/@Lollganz/oop-hangman)
