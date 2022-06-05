@@ -4,6 +4,10 @@ require_relative 'string_class'
 
 # Includes methods that get used as commentary throughout the game
 module GameText
+  def welcome_text
+    'Welcome to Hangman!'
+  end
+
   def enter_letter_text
     "Enter a letter #{'or type'.italic} #{'save'.yellow.italic} #{'to save your game'.italic}:"
   end
@@ -62,5 +66,10 @@ module GameText
 
   def save_file_already_exists_text
     "\s\s>>A save file with that name already exists!\n\s\s>>Enter another name.".red
+  end
+
+  def select_game_mode_text
+    question = 'What do you want to do?'
+    "What do you want to do?\n#{"#{'[1]'.yellow} new game"}\n#{"#{'[2]'.yellow} load game"}"
   end
 end
