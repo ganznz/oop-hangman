@@ -5,7 +5,7 @@ require_relative 'string_class'
 # Includes methods that get used as commentary throughout the game
 module GameText
   def enter_letter_text
-    'Enter a letter:'
+    "Enter a letter #{'or type'.italic} #{'save'.yellow.italic} #{'to save your game'.italic}:"
   end
 
   def enter_another_letter_text
@@ -54,5 +54,13 @@ module GameText
 
   def invalid_replay_game_input_text
     "\s\s >>Invalid input! Enter #{'Y'.yellow} or #{'N'.yellow}."
+  end
+
+  def save_file_input_text
+    'What do you want to name your save file?'
+  end
+
+  def save_file_already_exists_text
+    "\s\s>>A save file with that name already exists!\n\s\s>>Enter another name.".red
   end
 end
